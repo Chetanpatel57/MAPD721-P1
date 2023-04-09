@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="false"
@@ -16,7 +18,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".activities.HappyPlaceDetailActivity"
+            android:name=".activities.MapActivity"
+            android:label="Happy Place on Map"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomNoActionBarTheme"  />
+        <activity
+            android:name=".activities.PlaceMarkDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/CustomNoActionBarTheme" />
         <activity
@@ -29,10 +36,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AddHappyPlaceActivity"
+            android:name=".activities.AddPlaceMarkActivity"
             android:label="ADD HAPPY PLACE"
             android:screenOrientation="portrait"
             android:theme="@style/CustomNoActionBarTheme" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
     </application>
 
 </manifest>

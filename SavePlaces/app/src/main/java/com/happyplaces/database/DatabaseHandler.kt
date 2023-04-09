@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import com.happyplaces.models.HappyPlaceModel
+import com.happyplaces.models.PlaceMarkModel
 
 class DatabaseHandler(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -46,7 +46,7 @@ class DatabaseHandler(context: Context) :
         onCreate(db)
     }
 
-    fun addHappyPlace(happyPlace: HappyPlaceModel): Long {
+    fun addHappyPlace(happyPlace: PlaceMarkModel): Long {
         val db = this.writableDatabase
 
         val contentValues = ContentValues()
@@ -66,10 +66,10 @@ class DatabaseHandler(context: Context) :
         db.close() // Closing database connection
         return result
     }
-    fun getHappyPlacesList(): ArrayList<HappyPlaceModel> {
+    fun getHappyPlacesList(): ArrayList<PlaceMarkModel> {
 
         // A list is initialize using the data model class in which we will add the values from cursor.
-        val happyPlaceList: ArrayList<HappyPlaceModel> = ArrayList()
+        val happyPlaceList: ArrayList<PlaceMarkModel> = ArrayList()
 
         val selectQuery = "SELECT  * FROM $TABLE_HAPPY_PLACE" // Database select query
 
@@ -79,7 +79,7 @@ class DatabaseHandler(context: Context) :
             val cursor: Cursor = db.rawQuery(selectQuery, null)
             if (cursor.moveToFirst()) {
                 do {
-                    val place = HappyPlaceModel(
+                    val place = PlaceMarkModel(
                         cursor.getInt(cursor.getColumnIndex(KEY_ID)),
                         cursor.getString(cursor.getColumnIndex(KEY_TITLE)),
                         cursor.getString(cursor.getColumnIndex(KEY_IMAGE)),
@@ -100,7 +100,7 @@ class DatabaseHandler(context: Context) :
         }
         return happyPlaceList
     }
-    fun updateHappyPlace(happyPlace: HappyPlaceModel): Int {
+    fun updateHappyPlace(happyPlace: PlaceMarkModel): Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_TITLE, happyPlace.title) // HappyPlaceModelClass TITLE
@@ -122,7 +122,7 @@ class DatabaseHandler(context: Context) :
         db.close() // Closing database connection
         return success
     }
-    fun deleteHappyPlace(happyPlace: HappyPlaceModel): Int {
+    fun deleteHappyPlace(happyPlace: PlaceMarkModel): Int {
         val db = this.writableDatabase
         // Deleting Row
         val success = db.delete(TABLE_HAPPY_PLACE, KEY_ID + "=" + happyPlace.id, null)

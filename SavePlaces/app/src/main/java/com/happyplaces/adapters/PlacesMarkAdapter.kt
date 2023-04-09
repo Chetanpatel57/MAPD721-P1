@@ -9,16 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.happyplaces.R
-import com.happyplaces.activities.AddHappyPlaceActivity
+import com.happyplaces.activities.AddPlaceMarkActivity
 import com.happyplaces.activities.MainActivity
 import com.happyplaces.database.DatabaseHandler
-import com.happyplaces.models.HappyPlaceModel
-import kotlinx.android.synthetic.main.item_happy_place.view.*
+import com.happyplaces.models.PlaceMarkModel
+import kotlinx.android.synthetic.main.item_place_mark.view.*
 
 
-open class HappyPlacesAdapter(
+open class PlacesMarkAdapter(
     private val context: Context,
-    private var list: ArrayList<HappyPlaceModel>
+    private var list: ArrayList<PlaceMarkModel>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var onClickListener: OnClickListener? = null
 
@@ -26,7 +26,7 @@ open class HappyPlacesAdapter(
 
         return MyViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_happy_place,
+                R.layout.item_place_mark,
                 parent,
                 false
             )
@@ -51,7 +51,7 @@ open class HappyPlacesAdapter(
         }
     }
     fun notifyEditItem(activity: Activity, position: Int, requestCode: Int) {
-        val intent = Intent(context, AddHappyPlaceActivity::class.java)
+        val intent = Intent(context, AddPlaceMarkActivity::class.java)
         intent.putExtra(MainActivity.EXTRA_PLACE_DETAILS, list[position])
         activity.startActivityForResult(
             intent,
@@ -78,7 +78,7 @@ open class HappyPlacesAdapter(
         this.onClickListener = onClickListener
     }
     interface OnClickListener {
-        fun onClick(position: Int, model: HappyPlaceModel)
+        fun onClick(position: Int, model: PlaceMarkModel)
     }
 
     private class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)

@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.happyplaces.R
-import com.happyplaces.adapters.HappyPlacesAdapter
+import com.happyplaces.adapters.PlacesMarkAdapter
 import com.happyplaces.database.DatabaseHandler
-import com.happyplaces.models.HappyPlaceModel
+import com.happyplaces.models.PlaceMarkModel
 import com.happyplaces.utils.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.activity_main.*
 import pl.kitek.rvswipetodelete.SwipeToEditCallback
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         fabAddHappyPlace.setOnClickListener {
-            val intent = Intent(this@MainActivity, AddHappyPlaceActivity::class.java)
+            val intent = Intent(this@MainActivity, AddPlaceMarkActivity::class.java)
             startActivityForResult(intent, ADD_PLACE_ACTIVITY_REQUEST_CODE)
         }
         getHappyPlacesListFromLocalDB()
@@ -59,25 +59,25 @@ class MainActivity : AppCompatActivity() {
             tv_no_records_available.visibility = View.VISIBLE
         }
     }
-    private fun setupHappyPlacesRecyclerView(happyPlacesList: ArrayList<HappyPlaceModel>) {
+    private fun setupHappyPlacesRecyclerView(happyPlacesList: ArrayList<PlaceMarkModel>) {
 
         rv_happy_places_list.layoutManager = LinearLayoutManager(this)
         rv_happy_places_list.setHasFixedSize(true)
 
-        val placesAdapter = HappyPlacesAdapter(this, happyPlacesList)
+        val placesAdapter = PlacesMarkAdapter(this, happyPlacesList)
         rv_happy_places_list.adapter = placesAdapter
 
         placesAdapter.setOnClickListener(object :
-            HappyPlacesAdapter.OnClickListener {
-            override fun onClick(position: Int, model: HappyPlaceModel) {
-                val intent = Intent(this@MainActivity, HappyPlaceDetailActivity::class.java)
+            PlacesMarkAdapter.OnClickListener {
+            override fun onClick(position: Int, model: PlaceMarkModel) {
+                val intent = Intent(this@MainActivity, PlaceMarkDetailActivity::class.java)
                 intent.putExtra(EXTRA_PLACE_DETAILS, model)
                 startActivity(intent)
             }
         })
         val editSwipeHandler = object : SwipeToEditCallback(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = rv_happy_places_list.adapter as HappyPlacesAdapter
+                val adapter = rv_happy_places_list.adapter as PlacesMarkAdapter
                 adapter.notifyEditItem(
                     this@MainActivity,
                     viewHolder.adapterPosition,
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         editItemTouchHelper.attachToRecyclerView(rv_happy_places_list)
         val deleteSwipeHandler = object : SwipeToDeleteCallback(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = rv_happy_places_list.adapter as HappyPlacesAdapter
+                val adapter = rv_happy_places_list.adapter as PlacesMarkAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
 
                 getHappyPlacesListFromLocalDB() // Gets the latest list from the local database after item being delete from it.

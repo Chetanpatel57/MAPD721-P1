@@ -2,7 +2,7 @@ package com.happyplaces.models
 
 import java.io.Serializable
 
-data class HappyPlaceModel(
+data class PlaceMarkModel(
     val id: Int,
     val title: String,
     val image: String,
